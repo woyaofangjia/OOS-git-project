@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>C2C二手交易平台</title>
+    <link rel="icon" href="/img/page_icon.png"/>
+    <link href="/css/home_page/home_page_circle.css" rel="stylesheet"/>
+    <link href="/css/home_page/header_and_nav.css" rel="stylesheet"/>
+    <link href="/css/home_page/bottom_ifon_and_feature.css" rel="stylesheet"/>
+    <script src="/js/jquery-1.3.2.min.js"></script>
+    <script src="/js/home/home_page_circle.js"></script>
+    <script src="/js/home/header_model_js.js"></script>
+</head>
+<body>
+<header th:include="header :: copy"></header>
+<div th:include="short_nav_show :: short_nav_show" class="short_nav_show"></div>
+<nav th:include="my_nav :: my_nav" class="my_nav"></nav>
+<div th:include="personal_nav :: personal_nav" class="personal_nav"></div>
+<div class="my_slider">
+    <!-- 左右箭头 -->
+    <div class="left_border">
+        <span class="left_turn"></span>
+    </div>
+    <div class="right_border">
+        <span class="right_turn"></span>
+    </div>
+    
+    <!-- 第一个广告位：暖橙色 -->
+    <div class="my_slide current">
+        <div style="text-align: center; padding: 80px 20px; background-color: #ff9966; height: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h1 style="font-size: 36px; color: white; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">广告位招租</h1>
+            <p style="font-size: 18px; color: white; margin-bottom: 30px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">黄金位置，量大从优，欢迎洽谈合作！</p>
+            <button style="background-color: white; color: #ff9966; border: none; padding: 12px 30px; font-size: 16px; cursor: pointer; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">联系我们</button>
+        </div>
+    </div>
+    
+    <!-- 第二个广告位：暖绿色 -->
+    <div class="my_slide">
+        <div style="text-align: center; padding: 80px 20px; background-color: #99cc66; height: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h1 style="font-size: 36px; color: white; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">品牌推广</h1>
+            <p style="font-size: 18px; color: white; margin-bottom: 30px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">校园市场推广首选，覆盖精准用户群体</p>
+            <button style="background-color: white; color: #99cc66; border: none; padding: 12px 30px; font-size: 16px; cursor: pointer; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">立即咨询</button>
+        </div>
+    </div>
+    
+    <!-- 第三个广告位：暖蓝色 -->
+    <div class="my_slide">
+        <div style="text-align: center; padding: 80px 20px; background-color: #6699cc; height: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h1 style="font-size: 36px; color: white; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">活动合作</h1>
+            <p style="font-size: 18px; color: white; margin-bottom: 30px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">校园活动联合举办，提升品牌曝光度</p>
+            <button style="background-color: white; color: #6699cc; border: none; padding: 12px 30px; font-size: 16px; cursor: pointer; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">合作洽谈</button>
+        </div>
+    </div>
+</div>
+
+<!-- 错误消息显示 -->
+<div th:if="${errorMessage}" class="alert alert-danger" role="alert" style="margin: 20px;">
+    <strong>提示：</strong><span th:text="${errorMessage}"></span>
+</div>
+
+<!-- 登录成功提示 -->
+<div th:if="${loginSuccess}" class="alert alert-success" role="alert" style="margin: 20px;">
+    <strong>欢迎！</strong>登录成功，<span th:text="${userInformation.username}"></span>
+</div>
+
+<div class="featured_products">
+    <h2>精选的商品</h2>
+    
+    <!-- 当有商品数据时显示 -->
+    <th:block th:if="${shopInformationBean != null and not shopInformationBean.isEmpty()}">
+        <figure class="product" th:each="o:${shopInformationBean}">
+            <div class="product_img_div">
+                <img src="/img/home/feature_prodects/cont1.jpg" class="show_img" th:src="${o.image}"/>
+            </div>
+            <p class="show_tip" th:text="${o.remark}"></p>
+            <input class="product_id" type="hidden" th:value="${o.id}"/>
+            <a class="product_name" th:href="'/selectById.do?id='+${o.id}" th:text="${o.name}" th:title="${o.name}">wsk1103</a><br/>
+            <span class="product_cost" th:text="'￥'+${o.price}+'元'">$350.00</span><br/><br/>
+            <span class="buy product_1" th:value="${o.id}">加入购物车</span>
+        </figure>
+    </th:block>
+    
+    <!-- 当没有商品数据时显示友好的空状态 -->
+    <div th:if="${shopInformationBean == null or shopInformationBean.isEmpty()}" style="padding: 40px 0; text-align: center; background-color: #f9f9f9; border-radius: 8px; margin: 20px 0;">
+        <h3>暂无商品数据</h3>
+        <p>目前商城中还没有上架商品，敬请期待！</p>
+        <th:block th:if="${userInformation.id!=null}">
+            <p>你可以发布自己的商品</p>
+            <button onclick="window.location.href='/publish_product.do'" style="background-color: #5cb85c; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">发布商品</button>
+        </th:block>
+    </div>
+
+</div>
+<div class="home_page_info">
+    <div class="bottom_info">
+        <h2>
+            关于我们
+        </h2>
+        <p>
+            我们致力于提供便捷、安全的二手交易平台服务，让校园生活更加丰富多彩。
+        </p>
+    </div>
+    <div class="bottom_info">
+        <h2>
+            团队信息
+        </h2>
+        <p>我们拥有专业的技术团队，为您提供优质的二手交易体验。
+        </p>
+    </div>
+    <div class="bottom_info">
+        <h2>
+            版权声明
+        </h2>
+        <p>本网站所有内容均受法律保护，未经授权不得使用。
+        </p>
+    </div>
+</div>
+<footer>
+    <p>Copyright © 2025 校园二手交易平台. All rights reserved.</p>
+</footer>
+</body>
+</html>

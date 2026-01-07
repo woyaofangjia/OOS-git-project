@@ -1,0 +1,133 @@
+.featured_products {
+    width: 94%;
+    padding-bottom: 2em;
+    min-height: 520px;
+    position: relative;
+    left: 3%;
+    margin: 20px 0;
+    background-color: white;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.featured_products h2 {
+    margin-left: 43.5%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    color: #c17c3a;
+    font-family: cursive;
+}
+
+.featured_products .product {
+    position: relative;
+    float: left;
+    margin-left: 2%;
+    margin-right: 1%;
+    margin-bottom: 2%;
+    display: block;
+    text-align: center;
+    line-height: 2em;
+    width: 16%;
+    min-height: 280px;
+    border-radius: 6px;
+    padding: 1em;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 保持置顶商品样式不变 */
+.featured_products .product.sticky {
+    width: auto;
+    min-height: auto;
+    aspect-ratio: unset;
+    height: auto;
+}
+
+.featured_products .product .product_img_div {
+    display: block;
+    vertical-align:middle;
+    width: 100%;
+    height: 50%;
+    margin: auto;
+    text-align: center;
+
+}
+.featured_products .product .product_name {
+    /*color: rgba(0,0,0,0.62);*/
+    font-size: 1em;
+    display: inline-block;
+    overflow-x: hidden;
+}
+
+.featured_products .product .product_cost {
+    color: #c17c3a;
+    font-size: 1.8em;
+    display: inline-block;
+    overflow-x: hidden;
+    font-weight: bold;
+}
+
+.featured_products .product .buy {
+    color: #c17c3a;
+    font-size: 1.3em;
+    padding: 0.3em;
+    border: 1px solid #d4a76a;
+    border-radius: 7px;
+    box-shadow: 1px 2px 5px rgba(138, 76, 23, 0.2);
+    margin-bottom: 1%;
+}
+
+.featured_products .product .buy:hover {
+    cursor: pointer;
+    background-color: #d4a76a;
+    color: white;
+}
+
+.home_page_info {
+    width: 90%;
+    min-height: 200px;
+    position: relative;
+    display: block;
+    margin: 40px auto;
+    box-shadow: 0 2px 5px rgba(138, 76, 23, 0.2);
+    border-radius: 6px;
+    padding: 20px 15px;
+    background-color: white;
+    border: 1px solid #d4a76a;
+}
+
+.home_page_info .bottom_info {
+    float: left;
+    width: 25%;
+    margin-left: 6%;
+    margin-right: 2%;
+    min-height: 180px;
+}
+
+.home_page_info .bottom_info h2 {
+    color: #c17c3a;
+    font-family: cursive;
+    margin-bottom: 15px;
+}
+
+.home_page_info .bottom_info p {
+    color: #8a4c17;
+    line-height: 1.6;
+}
+
+footer {
+    width: 88%;
+    position: relative;
+    left: 6%;
+    margin: 20px 0 40px 0;
+    background-color: #d4a76a;
+    box-shadow: 2px 2px 10px rgba(138, 76, 23, 0.2);
+    border-radius: 10px;
+    clear: both;
+}
+
+footer p {
+    text-align: center;
+    color: white;
+    font-size: 1.3em;
+}

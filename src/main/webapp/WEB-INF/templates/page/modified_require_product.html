@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>修改求购商品</title>
+    <link rel="icon" href="/img/page_icon.png"/>
+    <link rel="stylesheet" href="/css/home_page/header_and_nav.css"/>
+    <link rel="stylesheet" href="/css/product/require_product.css"/>
+    <script src="/js/jquery-1.3.2.min.js"></script>
+    <script src="/js/home/header_model_js.js"></script>
+    <script src="/js/mall/type_list_obj.js"></script>
+    <script src="/js/publish/publish_product.js"></script>
+</head>
+<body>
+<header th:include="header :: copy"></header>
+<div th:include="short_nav_show :: short_nav_show" class="short_nav_show"></div>
+<nav th:include="my_nav :: my_nav" class="my_nav"></nav>
+<div th:include="personal_nav :: personal_nav" class="personal_nav"></div>
+<!--name,sort,quantity,price,remark,token,-->
+<div class="top_content">
+    <div class="publish_product_div">
+        <form action="/publishUserWant.do" method="post">
+            <input type="hidden" th:value="${token}" name="token"/>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>商品名</h3>
+                </div>
+                <div class="publish_content">
+                    <input type="text" class="title_input" name="name" required="required" th:value="${userWant.name}"
+                           />
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>数量</h3>
+                </div>
+                <div class="publish_content">
+                    <input type="text" class="count_input" name="quantity" required="required"
+                           th:value="${userWant.quantity}" />
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>单价</h3>
+                </div>
+                <div class="publish_content cost_content">
+                    <input type="text" class="cost_input" name="price" required="required" th:value="${userWant.price}"
+                           />
+                    <span>RMB(.00)</span>
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>详情</h3>
+                </div>
+                <div class="publish_content">
+                    <textarea class="detail_textarea" maxlength="122"
+                              placeholder="留下联系方式,方便卖家联系" name="remark" required="required"
+                              th:value="${userWant.remark}" th:text="${userWant.remark}"></textarea>
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>分类</h3>
+                </div>
+                <div class="publish_content">
+                    <div class="category_select">
+                        <select name="sort" id="category" class="form-control choose_first_type">
+                        <option value="">请选择一级分类</option>
+                        <!-- 动态加载一级分类选项 -->
+                    </select>
+                    </div><span class="to_left">--</span>
+                    <div class="category_select">
+                        <select name="classification" id="classification" class="form-control choose_second_type">
+                        <option value="">请选择二级分类</option>
+                        <!-- 动态加载二级分类选项 -->
+                    </select>
+                    </div><span class="to_left">--</span>
+                    <div class="category_select">
+                        <select name="specifickinds" id="specifickinds" class="form-control choose_third_type">
+                        <option value="">请选择三级分类</option>
+                        <!-- 动态加载三级分类选项 -->
+                    </select>
+                    </div>
+                </div>
+                <br/>
+                <!--<div th:value="${sort}" th:text="${sort}"></div>-->
+            </div>
+            <div class="submit_content_div">
+                <input type="submit" value="提交" class="submit_input"/>
+            </div>
+        </form>
+    </div>
+            <script type="text/javascript">
+                $(function() {
+                    // 确保分类数据已初始化
+                    if (typeof initTypeList === 'function') {
+                        initTypeList();
+                    }
+                    
+                    // 初始化一级分类下拉框
+                    initFirstSelect();
+                    
+                    // 绑定一级分类变更事件
+                    $('.choose_first_type').change(function() {
+                        updateSecondSelect();
+                    });
+                    
+                    // 绑定二级分类变更事件
+                    $('.choose_second_type').change(function() {
+                        updateThirdSelect();
+                    });
+                    
+                    // 初始化时设置选中的分类（编辑模式）
+                    var categoryId = '${userWant.categoryId}';
+                    var classificationId = '${userWant.classificationId}';
+                    var specificId = '${userWant.specifickindsId}';
+                    
+                    // 确保分类数据加载完成后再设置选中项
+                    function setCategorySelections() {
+                        // 设置一级分类选中
+                        if (categoryId) {
+                            $('#category').val(categoryId);
+                            
+                            // 手动触发一级分类变更事件，加载二级分类
+                            setTimeout(function() {
+                                // 加载二级分类后设置选中
+                                if (classificationId) {
+                                    // 等待二级分类数据加载
+                                    var secondSelectInterval = setInterval(function() {
+                                        var secondSelect = $('#classification');
+                                        if (secondSelect.find('option').length > 1) { // 检查是否已有选项
+                                            clearInterval(secondSelectInterval);
+                                            secondSelect.val(classificationId);
+                                            
+                                            // 手动触发二级分类变更事件，加载三级分类
+                                            setTimeout(function() {
+                                                // 加载三级分类后设置选中
+                                                if (specificId) {
+                                                    // 等待三级分类数据加载
+                                                    var thirdSelectInterval = setInterval(function() {
+                                                        var thirdSelect = $('#specifickinds');
+                                                        if (thirdSelect.find('option').length > 1) { // 检查是否已有选项
+                                                            clearInterval(thirdSelectInterval);
+                                                            thirdSelect.val(specificId);
+                                                        }
+                                                    }, 100);
+                                                }
+                                            }, 100);
+                                        }
+                                    }, 100);
+                                }
+                            }, 100);
+                        }
+                    }
+                    
+                    // 如果分类数据还未加载完成，等待一段时间后再设置选中项
+                    setTimeout(setCategorySelections, 200);
+                });
+            </script>
+    <footer>
+        <p>Copyright © 2017.Company name All rights reserved.<a href="/"></a></p>
+    </footer>
+</div>
+</body>
+</html>
